@@ -1,20 +1,19 @@
-import { useId } from "react";
-import styles from "./ContactForm.module.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { nanoid } from "nanoid";
-import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { useId } from 'react';
+import styles from './ContactForm.module.css';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
 const ContactSchema = Yup.object().shape({
   username: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+    .min(3, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
   userNumber: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+    .min(3, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
 });
 
 export default function ContactForm() {
@@ -24,13 +23,13 @@ export default function ContactForm() {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(
-      addContact({
+    const onSubmit = {
       name: values.username,
       number: values.userNumber,
-      id: nanoid(5),
-    })
-    )
+      id: crypto.randomUUID(),
+    };
+
+    dispatch(addContact(onSubmit));
 
     actions.resetForm();
   };
@@ -38,8 +37,8 @@ export default function ContactForm() {
   return (
     <Formik
       initialValues={{
-        username: "",
-        userNumber: "",
+        username: '',
+        userNumber: '',
       }}
       onSubmit={handleSubmit}
       validationSchema={ContactSchema}

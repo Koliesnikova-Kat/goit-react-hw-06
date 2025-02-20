@@ -6,7 +6,7 @@ export default function SearchBox() {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.filters.name);
 
-  const handleFilterChange = (event) => dispatch(setNameFilter(event.target.value));
+  const handleFilterChange = (e) => dispatch(setNameFilter(e.target.value));
 
   return (
     <div className={styles.container}>
